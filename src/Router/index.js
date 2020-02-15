@@ -15,6 +15,7 @@ import { BottomNavigation, BottomNavigationTab, Layout, Icon } from '@ui-kitten/
 import AuthCheck from '../screens/AuthCheck'
 import ComplaintScreen from '../screens/ComplaintScreen'
 import NewsScreen from '../screens/NewsScreen'
+import SelectLocation from '../screens/ComplaintScreen/SelectLocation'
 
 
 const HomeIcon = (style) => (
@@ -62,14 +63,21 @@ const ProfileStack  =   createStackNavigator({
 },
   {
     defaultNavigationOptions: {
-      headerShown: false
+      headerShown: false,
     }
   }
 )
 
 const ComplaintStack  = createStackNavigator({
-  Complaint: ComplaintScreen
-})
+  Complaint: ComplaintScreen,
+  SelectLocation: SelectLocation
+},
+  {
+    defaultNavigationOptions: {
+      headerShown: false
+    }
+  }
+)
 
 const NewsStack       = createStackNavigator({
   News: NewsScreen
