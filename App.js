@@ -11,7 +11,7 @@ const App = () => (
   <>
     <IconRegistry icons={EvaIconsPack}/>
     <ApplicationProvider mapping={mapping} theme={theme}>
-      <StatusBar backgroundColor="#95abdb" barStyle="light-content" />
+      <StatusBar backgroundColor="#3782c4" barStyle="light-content" />
       <Router />
       {/* <Text>Hola</Text> */}
       {/* <LoginScreen /> */}

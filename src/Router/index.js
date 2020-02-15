@@ -13,11 +13,17 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator, createAppContainer, SafeAreaView  } from 'react-navigation'
 import { BottomNavigation, BottomNavigationTab, Layout, Icon } from '@ui-kitten/components';
 import AuthCheck from '../screens/AuthCheck'
+import ComplaintScreen from '../screens/ComplaintScreen'
+import NewsScreen from '../screens/NewsScreen'
 
 
 const HomeIcon = (style) => (
     <Icon {...style} name='home-outline'/>
 );
+
+const PlusIcon  = (style) =>  (
+  <Icon {...style} name="plus-outline" />
+)
 
 const ProfileIcon = (style) => (
     <Icon {...style} name='menu-outline'/>
@@ -61,6 +67,14 @@ const ProfileStack  =   createStackNavigator({
   }
 )
 
+const ComplaintStack  = createStackNavigator({
+  Complaint: ComplaintScreen
+})
+
+const NewsStack       = createStackNavigator({
+  News: NewsScreen
+})
+
 
 const TabBarComponent = ({ navigation }) => {
 
@@ -75,7 +89,8 @@ const TabBarComponent = ({ navigation }) => {
           selectedIndex={navigation.state.index} onSelect={onSelect}>
           <BottomNavigationTab title='Home' icon={HomeIcon}/>
           <BottomNavigationTab title='My Report' icon={ReportIcon}/>
-          <BottomNavigationTab title="Notification" icon={NotifyIcon} />
+          <BottomNavigationTab title='Complaint' icon={PlusIcon}/>
+          <BottomNavigationTab title="News" icon={NotifyIcon} />
           <BottomNavigationTab title='Profile' icon={ProfileIcon}/>
         </BottomNavigation>
       </SafeAreaView>
@@ -85,6 +100,8 @@ const TabBarComponent = ({ navigation }) => {
 const TabNavigator = createBottomTabNavigator({
     Home: HomeStack,
     MyReport: ReportStack,
+    Complaint: ComplaintStack,
+    News: NewsScreen,
     Profile: ProfileStack
   }, {
     tabBarComponent: TabBarComponent,

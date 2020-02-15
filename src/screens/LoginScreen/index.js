@@ -43,14 +43,20 @@ class LoginScreen extends Component {
 
                 Alert.alert('Hii, '+res.data.data.name,'Welcome To E-Report');
 
+            }else{
+
+                this.setState({isSubmit:false})
+
+                Alert.alert('Oops','Something is went wrong');
             }
 
         })
         .catch(err => {
 
-            this.setState({isSubmit:false})
+                this.setState({isSubmit:false})
 
-            Alert.alert('Oops','Invalid Email or Password');
+                Alert.alert('Oops','Invalid Email or Password');                
+
 
         })
     }
