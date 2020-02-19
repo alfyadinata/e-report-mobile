@@ -1,19 +1,19 @@
 import React from 'react'
 import { Text, View, ActivityIndicator, Button, StyleSheet, Dimensions, StatusBar  } from 'react-native';
 import MapView,{ Marker} from 'react-native-maps'
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from '@react-native-community/geolocation'
 import { Icon } from '@ui-kitten/eva-icons'
 
 class SelectLocation extends React.Component{
-    constructor(props) {
-        super(props);
+    constructor() {
+        super()
         this.state = {
-          loading: true,
+          loading: false,
           region: {
-            latitude: 10,
-            longitude: 10,
-            latitudeDelta: 0.001,
-            longitudeDelta: 0.001
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.00922 * 1.5,
+            longitudeDelta: 0.00421 * 1.5
           },
           isMapReady: false,
           marginTop: 1,
@@ -23,14 +23,15 @@ class SelectLocation extends React.Component{
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
       Geolocation.getCurrentPosition(
           (position) => {
             const region = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
-              latitudeDelta: 0.001,
-              longitudeDelta: 0.001
+              latitudeDelta: 0.00421 * 1.5,
+              longitudeDelta: 0.00421 * 1.5,  
+              loading: false
             };
             this.setState({
               region: region,
@@ -39,13 +40,13 @@ class SelectLocation extends React.Component{
             });
           },
           (error) => {
-            alert(error);
+            alert(error)
             this.setState({
               error: error.message,
               loading: false
             })
           },
-          { enableHighAccuracy: true, timeout: 200000, maximumAge: 5000 },
+          { enableHighAccuracy: false, timeout: 200000, maximumAge: 5000 },
         );
     }
 
@@ -55,9 +56,10 @@ class SelectLocation extends React.Component{
 
       // Fetch location details as a JOSN from google map API
     fetchAddress = () => {
-        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.region.latitude + "," + this.state.region.longitude + "&key=" + "AIzaSyAXW-WDp0MF5si6oFXaukDQuThTr1wqmDE")
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.region.latitude + "," + this.state.region.longitude + "&key=" + "AIzaSyA9PE5dfNCRXlVK4Bfz5UXbSk-xqEecJiY")
         .then((response) => response.json())
         .then((responseJson) => {
+            console.info(responseJson)
             const userLocation = responseJson.results[0].formatted_address;
             this.setState({
             userLocation: userLocation,
@@ -66,7 +68,7 @@ class SelectLocation extends React.Component{
         });
     }
 
-        // Update state on region change
+    // Update state on region change
     onRegionChange = region => {
         this.setState({
         region,
@@ -104,11 +106,11 @@ class SelectLocation extends React.Component{
                         onMapReady={this.onMapReady}
                         onRegionChangeComplete={this.onRegionChange}
                         >
-                        {/* <MapView.Marker
+                        <MapView.Marker
                             coordinate={{ "latitude": this.state.region.latitude, "longitude": this.state.region.longitude }}
                             title={"Your Location"}
                             draggable
-                        /> */}
+                        />
                         </MapView>
                     }
         

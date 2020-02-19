@@ -79,6 +79,22 @@ const ComplaintStack  = createStackNavigator({
   }
 )
 
+ComplaintStack.navigationOptions = ({ navigation }) => {
+
+  let tabBarVisible = true;
+
+  let routeName = navigation.state.routes[navigation.state.index].routeName
+
+  if ( routeName == 'SelectLocation' ) {
+      tabBarVisible = false
+  }
+
+  return {
+      tabBarVisible,
+  }
+}
+
+
 const NewsStack       = createStackNavigator({
   News: NewsScreen
 })
