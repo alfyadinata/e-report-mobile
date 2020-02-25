@@ -85,7 +85,7 @@ ComplaintStack.navigationOptions = ({ navigation }) => {
 
   let routeName = navigation.state.routes[navigation.state.index].routeName
 
-  if ( routeName == 'SelectLocation' ) {
+  if ( routeName == 'SelectLocation' || routeName == 'Complaint' ) {
       tabBarVisible = false
   }
 
