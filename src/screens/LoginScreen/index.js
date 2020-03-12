@@ -22,43 +22,55 @@ class LoginScreen extends Component {
         this.props.navigation.navigate('AuthLoading')
     }
     // handle loading
-    handleLoading   =   ()  =>  {
-        this.setState({isSubmit: !this.state.isSubmit})
+    handleLoading   =   async ()  =>  {
+
+            this.setState({isSubmit: !this.state.isSubmit})            
+
     }
     
     handleSubmit    =   async ()  =>  {
 
         await this.handleLoading()
 
-        await baseApi.post('/auth/signin', this.state)
-        .then(async res => {
-            this.setState({isSubmit:false})
-            console.info(res)
-            if (res.status === 200) {
-                let token   =   await res.data.token
+        setTimeout(async () => {
 
-                await AsyncStorage.setItem('token', token)
-
-                this.props.navigation.navigate('App')
-
-                Alert.alert('Hii, '+res.data.data.name,'Welcome To E-Report');
-
-            }else{
-
+            await baseApi.post('/auth/signin', this.state)
+            .then(async res => {
                 this.setState({isSubmit:false})
+                console.info(res)
+                if (res.status === 200) {
+    
+                    let token   =   res.data.token
+                    let user    =   res.data.data
+    
+                    await AsyncStorage.setItem('token', JSON.stringify(token))
+                    await AsyncStorage.setItem('name', JSON.stringify(user.name))
+                    await AsyncStorage.setItem('user_id', JSON.stringify(user.id))
+                    await AsyncStorage.setItem('email', JSON.stringify(user.email))
+                    await AsyncStorage.setItem('role_id', JSON.stringify(user.role_id))
+    
+                    this.props.navigation.navigate('App')
+    
+                    Alert.alert('Hii, '+res.data.data.name,' Welcome To E-Report');
+    
+                }else{
+    
+                    this.setState({isSubmit:false})
+    
+                    Alert.alert('Oops','Something is went wrong');
+                }
+    
+            })
+            .catch(err => {
+    
+                    this.setState({isSubmit:false})
+    
+                    Alert.alert('Oops','Invalid Email or Password');                
+    
+            })
 
-                Alert.alert('Oops','Something is went wrong');
-            }
+        }, 1500);
 
-        })
-        .catch(err => {
-
-                this.setState({isSubmit:false})
-
-                Alert.alert('Oops','Invalid Email or Password');                
-
-
-        })
     }
     render() {
 

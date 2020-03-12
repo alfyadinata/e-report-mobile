@@ -23,11 +23,10 @@ const   TopTab      =   ()  =>  {
             selectedIndex={selectedIndex}
             shouldLoadComponent={shouldLoadComponent}
             onSelect={setSelectedIndex}>
-            <Tab title='On Going'>
+            <Tab title='On Going' style={{ padding: 3 }}>
                 <OnGoing />
             </Tab>
-            <Tab title='History'>
-            <Layout style={styles.tabContainer}>
+            <Tab title='History' style={{ padding: 3 }}>
                 <TouchableOpacity onPress={() => { alert('Clicked') }}>
                     <ListComplaint
                         title="Pelaporan Jalan Rusak"
@@ -40,7 +39,6 @@ const   TopTab      =   ()  =>  {
                     description="The key feature of wrapping custom list items into ListItem component is that it automatically"
                     icon={StarIcon}
                 />
-            </Layout>
             </Tab>
         </TabView>
     )
