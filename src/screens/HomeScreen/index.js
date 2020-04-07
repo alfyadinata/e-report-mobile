@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text, Card, Icon, Button } from '@ui-kitten/components';
 import baseApi from '../../config/http';
@@ -14,7 +14,7 @@ class HomeScreen extends Component {
 	}
 	getCategory = async () => {
 		await baseApi.get('/category').then((res) => {
-			this.setState({ category: res.data.data });
+			this.setState({ category: res.data.data, isLoading: false });
 		});
 	};
 
@@ -50,30 +50,36 @@ class HomeScreen extends Component {
 
 					<View style={styles.header}>
 						<View style={styles.row}>
-							{this.state.category.map((data, index) => {
-								return (
-									<View
-										key={index}
-										style={{
-											flexDirection: 'column',
-											alignItems: 'center',
-											backgroundColor: 'transparent'
-										}}
-									>
-										<Button
-											onPress={() =>
-												this.props.navigation.navigate('Complaint', { category_id: data.id })}
-											appearance="ghost"
-											status="basic"
-											style={styles.col}
-											icon={(styles) => (
-												<Icon {...styles} name={data.icon} width="32" height="32" />
-											)}
-										/>
-										<Text style={{ opacity: 0.5 }}>{data.name}</Text>
-									</View>
-								);
-							})}
+							{this.state.isLoading === true ? (
+								<ActivityIndicator size="large" />
+							) : (
+								this.state.category.map((data, index) => {
+									return (
+										<View
+											key={index}
+											style={{
+												flexDirection: 'column',
+												alignItems: 'center',
+												backgroundColor: 'transparent'
+											}}
+										>
+											<Button
+												onPress={() =>
+													this.props.navigation.navigate('Complaint', {
+														category_id: data.id
+													})}
+												appearance="ghost"
+												status="basic"
+												style={styles.col}
+												icon={(styles) => (
+													<Icon {...styles} name={data.icon} width="32" height="32" />
+												)}
+											/>
+											<Text style={{ opacity: 0.5 }}>{data.name}</Text>
+										</View>
+									);
+								})
+							)}
 						</View>
 					</View>
 					<Text style={{ margin: '3%', opacity: 0.5 }} category="h6">

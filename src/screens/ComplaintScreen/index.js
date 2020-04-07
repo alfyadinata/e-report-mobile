@@ -1,6 +1,6 @@
 import React from 'react';
 import baseApi from '../../config/http';
-import { StyleSheet, Image, Alert, Dimensions, Picker, View, ToastAndroid } from 'react-native';
+import { StyleSheet, Image, Alert, Dimensions, Picker, View, ToastAndroid, ActivityIndicator } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { Layout, Text, Input, Button, CheckBox, Icon, Radio, RadioGroup } from '@ui-kitten/components';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,6 +18,7 @@ export default class ComplainScreen extends React.Component {
 		dataCategory: [],
 		description: '',
 		address: '',
+		loadingCategory: true,
 		category_id: '',
 		isAnonym: 0,
 		foto: null,
@@ -59,22 +60,6 @@ export default class ComplainScreen extends React.Component {
 		this.getCategory();
 	}
 
-	componentWillUnmount() {
-		this.setState({
-			visibleModal: false,
-			checked: false,
-			latitude: '',
-			longitude: '',
-			dataCategory: [],
-			description: '',
-			address: '',
-			category_id: '',
-			isAnonym: 0,
-			foto: null,
-			loading: true
-		});
-	}
-
 	handleSubmit = async () => {
 		this.setState({ visibleModal: !this.state.visibleModal });
 		const formData = new FormData();
@@ -96,10 +81,22 @@ export default class ComplainScreen extends React.Component {
 		await baseApi
 			.post('/complaint/create', formData)
 			.then((res) => {
-				this.setState({ visibleModal: !this.state.visibleModal });
+				this.setState({
+					visibleModal: false,
+					checked: false,
+					latitude: '',
+					longitude: '',
+					dataCategory: [],
+					description: '',
+					address: '',
+					category_id: '',
+					isAnonym: 0,
+					foto: null,
+					loading: true
+				});
 
 				ToastAndroid.show('Success', ToastAndroid.LONG, ToastAndroid.CENTER);
-				this.props.navigation.navigate('MyReportScreen');
+				this.props.navigation.navigate('MyReport');
 			})
 			.catch((err) => {
 				console.info(err);
@@ -111,7 +108,8 @@ export default class ComplainScreen extends React.Component {
 			.get('/category')
 			.then((res) => {
 				this.setState({
-					dataCategory: res.data.data
+					dataCategory: res.data.data,
+					loadingCategory: false
 				});
 			})
 			.catch((err) => {
@@ -160,9 +158,13 @@ export default class ComplainScreen extends React.Component {
 							selectedIndex={this.state.category_id}
 							onChange={(category_id) => this.setState({ category_id: category_id })}
 						>
-							{this.state.dataCategory.map((data, index) => {
-								return <Radio key={index} style={styles.radio} text={data.name} />;
-							})}
+							{this.state.loadingCategory ? (
+								<ActivityIndicator size="large" />
+							) : (
+								this.state.dataCategory.map((data, index) => {
+									return <Radio key={index} style={styles.radio} text={data.name} />;
+								})
+							)}
 						</RadioGroup>
 						{this.state.foto == null ? (
 							<Image source={require('../../../public/c3.png')} style={{ width: 300, height: 300 }} />
