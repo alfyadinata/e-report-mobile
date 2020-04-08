@@ -20,20 +20,20 @@ class ProfileScreen extends Component {
 	getProfile = async () => {
 		await baseApi.get('/profile').then((res) => {});
 	};
+
 	handleLogout = async () => {
 		this.setState({ modal: true });
+		this.clearToken();
+
 		setTimeout(() => {
+			this.props.navigation.navigate('Auth');
 			this.setState({ modal: false });
 		}, 3000);
-		// await Alert.alert(
-		// 	'Alert Title',
-		// 	'My Alert Msg', // <- this part is optional, you can pass an empty string
-		// 	[ { text: 'OK', onPress: () => console.log('OK Pressed') } ],
-		// 	{ cancelable: false }
-		// );
-		// await AsyncStorage.clear();
-		// this.props.navigation.navigate('Auth');
 	};
+
+	async clearToken() {
+		await AsyncStorage.clear();
+	}
 
 	fadeIn = () => {
 		// Will change fadeAnim value to 1 in 5 seconds
