@@ -95,7 +95,7 @@ class RegisterScreen extends Component {
                         <Layout style={styles.transp}>
                             <Layout style={styles.containerCard}>
                                 <Card style={styles.card}>
-                                    <Text category="h4" status="control" style={{ marginTop:'7%'}}>Sign Up To E-Report</Text>
+                                    <Text category="h4" status="control" style={{ marginTop:'7%'}}>Sign Up To E-Complaint</Text>
                                     <Input style={styles.input}
                                         value={this.state.name}
                                         placeholder="Name"

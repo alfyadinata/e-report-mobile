@@ -105,7 +105,7 @@ class LoginScreen extends Component {
                         <Layout style={styles.transp}>
                             <Layout style={styles.containerCard}>
                                 <Card style={styles.card}>
-                                    <Text category="h4" status="control" style={{ marginTop:'7%'}}>Sign In To E-Report</Text>
+                                    <Text category="h4" status="control" style={{ marginTop:'7%'}}>Sign In To E-Complaint</Text>
                                     <Input style={styles.input}
                                         value={this.state.email}
                                         placeholder="Email"

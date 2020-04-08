@@ -13,10 +13,10 @@ class AuthLoadingScreen extends Component {
         return (
             <>
                 <StatusBar  translucent={true} backgroundColor={"transparent"} barStyle="light-content" />
-                <ImageBackground style={styles.bg} source={require('../../../public/bg3.jpeg')} resizeMode="cover" resizeMethod="scale" blurRadius={1} >
+                <ImageBackground style={styles.bg} source={require('../../../public/bg3.jpeg')} resizeMode="cover" resizeMethod="resize" blurRadius={1} >
                     <Layout style={styles.transp}>
                         <Layout style={styles.title}>
-                            <Text category="h4" status="control">Welcome To E-Report</Text>
+                            <Text category="h4" status="control">Welcome To E-Complaint</Text>
                         </Layout>
                         <Layout style={styles.container}>
                             <Layout level="2" style={styles.btn}>
