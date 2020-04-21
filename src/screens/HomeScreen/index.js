@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Image, Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Text, Card, Icon, Button } from '@ui-kitten/components';
+import { Text, Card, Icon, Button, Layout } from '@ui-kitten/components';
 import baseApi from '../../config/http';
 
 class HomeScreen extends Component {
@@ -26,9 +26,9 @@ class HomeScreen extends Component {
 		const { width } = Dimensions.get('window');
 		const { height } = Dimensions.get('screen');
 		return (
-			<ScrollView style={{ backgroundColor: 'white' }} showsVerticalScrollIndicator={false}>
-				<View style={styles.container}>
-					<View style={styles.title}>
+			<Layout style={styles.container}>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<Layout style={styles.title}>
 						<Text status="info" category="h2">
 							E-Complaint
 						</Text>
@@ -37,25 +37,19 @@ class HomeScreen extends Component {
 							resizeMode="stretch"
 							style={{ width: width, height: height * 0.25 }}
 						/>
-					</View>
-					{/* <View
-						style={{
-							borderBottomColor: 'black',
-							borderBottomWidth: 1
-						}}
-					/> */}
+					</Layout>
 					<Text style={{ margin: '3%', opacity: 0.5 }} category="h6">
 						Categories
 					</Text>
 
-					<View style={styles.header}>
-						<View style={styles.row}>
+					<Layout style={styles.header}>
+						<Layout style={styles.row}>
 							{this.state.isLoading === true ? (
 								<ActivityIndicator size="large" />
 							) : (
 								this.state.category.map((data, index) => {
 									return (
-										<View
+										<Layout
 											key={index}
 											style={{
 												flexDirection: 'column',
@@ -76,17 +70,17 @@ class HomeScreen extends Component {
 												)}
 											/>
 											<Text style={{ opacity: 0.5 }}>{data.name}</Text>
-										</View>
+										</Layout>
 									);
 								})
 							)}
-						</View>
-					</View>
+						</Layout>
+					</Layout>
 					<Text style={{ margin: '3%', opacity: 0.5 }} category="h6">
-						News
+						Latest Notification
 					</Text>
 					<Card style={styles.header}>
-						<Text>Total Complaint : 150</Text>
+						<Text style={styles.notif}>Total Complaint </Text>
 					</Card>
 					<Card style={styles.header}>
 						<Text>Total Complaint : 150</Text>
@@ -94,8 +88,8 @@ class HomeScreen extends Component {
 					<Card style={styles.header}>
 						<Text>Total Complaint : 150</Text>
 					</Card>
-				</View>
-			</ScrollView>
+				</ScrollView>
+			</Layout>
 		);
 	}
 }
@@ -103,11 +97,15 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: 'white'
+		justifyContent: 'center'
+		// backgroundColor: 'white'
 	},
 	title: {
 		padding: 10
+	},
+	notif: {
+		opacity: 0.5,
+		fontWeight: 'bold'
 	},
 	row: {
 		flex: 1,
@@ -124,7 +122,7 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		margin: 10,
 		padding: 10,
-		backgroundColor: 'white',
+		// backgroundColor: 'white',
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,

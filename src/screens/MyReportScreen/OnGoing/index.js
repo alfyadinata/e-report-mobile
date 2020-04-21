@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image, Alert, StyleSheet, View, RefreshControl, ImageBackground } from 'react-native';
-import { Card, Text, Button, Icon, Layout, Spinner } from '@ui-kitten/components';
-import { ScrollView, FlatList } from 'react-native-gesture-handler';
+import { Image, Alert, StyleSheet, View, RefreshControl } from 'react-native';
+import { Card, Text, Button, Icon, Layout } from '@ui-kitten/components';
+import { ScrollView } from 'react-native-gesture-handler';
 import baseApi from '../../../config/http';
-import AsyncStorage, { useAsyncStorage } from '@react-native-community/async-storage';
 import Loader from '../../../components/Loader';
 
 class OnGoing extends React.Component {
@@ -67,13 +66,14 @@ class OnGoing extends React.Component {
 				}
 			>
 				<Layout style={styles.container}>
+					<Text style={{ alignSelf: 'center', opacity: 0.5 }}>Pull to refresh</Text>
 					{this.state.data.map((item, index) => {
 						return (
 							<Layout style={styles.row} key={index}>
 								<Card
 									header={() => (
 										<React.Fragment>
-											<Text style={styles.headerText} status="info" category="h6">
+											<Text style={styles.headerText} status="info" category="h5">
 												{item.description}
 											</Text>
 										</React.Fragment>
@@ -130,6 +130,7 @@ class OnGoing extends React.Component {
 										resizeMode="cover"
 										source={{ uri: `http://192.168.43.136:5000/images/${item.foto}` }}
 									/>
+									<Text style={styles.headerText}>Address : {item.address}</Text>
 									<Text style={styles.headerText} status="info" category="h6">
 										#{item.categories.name}
 									</Text>
@@ -147,18 +148,22 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		flexDirection: 'column',
-		backgroundColor: 'blue'
+		// flexDirection: 'column',
+		backgroundColor: 'white'
 	},
 	row: {
 		padding: 10,
-		backgroundColor: '#dfdfdf'
+		backgroundColor: 'transparent'
 	},
 	headerText: {
 		marginHorizontal: 24,
-		marginVertical: 16
+		marginVertical: 16,
+		color: 'black',
+		opacity: 0.5,
+		fontWeight: 'bold'
 	},
 	footerContainer: {
+		backgroundColor: 'transparent',
 		flexDirection: 'row',
 		justifyContent: 'flex-end'
 	},
@@ -169,7 +174,17 @@ const styles = StyleSheet.create({
 		height: 300
 	},
 	myCard: {
-		marginTop: '2%'
+		// backgroundColor: 'white',
+		marginTop: '2%',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 11
+		},
+		shadowOpacity: 0.57,
+		shadowRadius: 15.19,
+
+		elevation: 23
 	}
 });
 
